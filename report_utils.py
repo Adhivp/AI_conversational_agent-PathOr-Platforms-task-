@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 from fpdf import FPDF
 import tempfile
 import os
+import streamlit as st
 
 class PDF(FPDF):
     def header(self):
@@ -107,18 +108,21 @@ def generate_pdf_report(df):
         pdf.add_page()
         pdf.add_image(img_path)
 
-    with tempfile.NamedTemporaryFile(delete=False, suffix='.pdf') as tmp_pdf:
-        pdf.output(tmp_pdf.name)
-        tmp_pdf_path = tmp_pdf.name
+    # Save PDF to a known location
+    report_path = "./data_analysis_report.pdf"
+    pdf.output(report_path)
 
-    with open(tmp_pdf_path, 'rb') as f:
+    # Return the PDF buffer and path
+    with open(report_path, 'rb') as f:
         pdf_buffer = f.read()
 
+    # Clean up temporary image files
     for img_path in fig_paths:
         if os.path.exists(img_path):
             os.remove(img_path)
 
-    return pdf_buffer, tmp_pdf_path
+    return pdf_buffer, report_path
+
 
 
 #code for testing mail and report
