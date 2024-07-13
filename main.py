@@ -38,7 +38,13 @@ def handle_bot_response(user_input):
     elif "send email" in user_input:
         send_message("Please fill the email deatils")
     else:
-        send_message("Sorry, I didn't understand that.")
+         send_message(
+            "Hello! I'm here to help you with the following tasks:\n"
+            "- Upload a CSV file: 'Upload CSV'\n"
+            "- Generate a report: 'Generate Report'\n"
+            "- Send the report via email: 'Send Email'\n"
+            "How can I assist you today?"
+        )
 
 st.title("AI Conversational Bot")
 
